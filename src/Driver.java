@@ -11,10 +11,10 @@ public class Driver {
 
         //testFileRead();
         System.out.println();
-        //scan.nextLine();
+        scan.nextLine();
         testPriorityQueueConstruction();
 
-        //HuffmanTree tree = new HuffmanTree(myQueue);
+        HuffmanTree tree = new HuffmanTree(myQueue);
 
         printWriter.close();
     }
@@ -37,6 +37,8 @@ public class Driver {
     public static FileWriter fileWriter;
 
     public static PriorityQueue myQueue;
+
+    public static ArrayHeap myHeap;
 
     /**
      * Checks the File and Print writer objects. Will throw an exception if the file is not found.
@@ -63,18 +65,19 @@ public class Driver {
 
     private static Map<Character,Integer> createTable(String input) {
 
-        Map<Character,Integer> frequencyTable = new HashMap<>();
+        Map<Character,Integer> mapCharFreq = new HashMap<>();
+        Map<Character,Integer> mapCharBits = new HashMap<>();
 
         for (int i = 0; i < input.length(); i++) {
-            if (frequencyTable.containsKey(input.charAt(i))) {
-                int count = frequencyTable.get(input.charAt(i));
-                frequencyTable.put(input.charAt(i), count + 1);
+            if (mapCharFreq.containsKey(input.charAt(i))) {
+                int count = mapCharFreq.get(input.charAt(i));
+                mapCharFreq.put(input.charAt(i), count + 1);
             } else {
-                frequencyTable.put(input.charAt(i), 1);
+                mapCharFreq.put(input.charAt(i), 1);
             }
         }
 
-        return frequencyTable;
+        return mapCharFreq;
 
     }
 
@@ -101,10 +104,11 @@ public class Driver {
         for (Map.Entry<Character, Integer> entry : newMap.entrySet()) {
             myQueue.addElement(entry.getKey(), entry.getValue());
         }
-        for (Map.Entry<Character, Integer> entry : newMap.entrySet()) {
-            System.out.println("[" + entry.getKey() + "] [" + entry.getValue() + "]");
-        }
+//        for (Map.Entry<Character, Integer> entry : newMap.entrySet()) {
+//            System.out.println("[" + entry.getKey() + "] [" + entry.getValue() + "]");
+//        }
         myQueue.printQueue();
+        System.out.println(myQueue.toString());
     }
 
     private static void testBuildTree() {
@@ -113,6 +117,12 @@ public class Driver {
 
 //    public void printTable(Map<Character, Integer> theMap) {
 //        for ()
+//    }
+
+//    private static String encode(ArrayHeap theHeap) {
+//        StringBuilder s = new StringBuilder();
+//        HuffmanTree.HuffmanNode current = theHeap.getRoot();
+//
 //    }
 
 }

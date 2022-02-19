@@ -1,8 +1,28 @@
 public class ArrayHeap {
 
-    private HuffmanTree.HuffmanNode[] Heap;
+    protected final HuffmanTree.HuffmanNode[] myHeap;
+    protected int mySize;
+    protected int myCount;
 
-    private int parent(int index) {
+    public ArrayHeap(int theSize) {
+        this.mySize = theSize + 1;
+        this.myCount = 0;
+        myHeap = new HuffmanTree.HuffmanNode[mySize];
+    }
+
+    public int getMyCount() {
+        return this.myCount;
+    }
+
+    public int getMySize() {
+        return this.mySize;
+    }
+
+    public HuffmanTree.HuffmanNode getRoot() {
+        return myHeap[1];
+    }
+
+    public int parent(int index) {
         return (index / 2);
     }
 
@@ -14,68 +34,49 @@ public class ArrayHeap {
         return (2 * index) + 1;
     }
 
-    private boolean isLeaf(int index) {
+    public boolean isLeaf(int index) {
         return index <= myCount && index > (myCount / 2);
     }
 
-    public void add() {
-
+    public void add(HuffmanTree.HuffmanNode theNode) {
+        myHeap[++myCount] = theNode;
+        heapify(1);
     }
 
     public HuffmanTree.HuffmanNode removeMin() {
-
+        HuffmanTree.HuffmanNode removed = myHeap[1];
+        myHeap[1] = myHeap[myCount];
+        myHeap[myCount] = null;
+        myCount--;
+        heapify(1);
+        return removed;
     }
 
-
-
-    private void swap(int indexA, int indexB) {
+    public void swap(int indexA, int indexB) {
         HuffmanTree.HuffmanNode tempNode;
-        tempNode = Heap[indexA];
-        Heap[indexA] = Heap[indexB];
-        Heap[indexB] = tempNode;
+        tempNode = myHeap[indexA];
+        myHeap[indexA] = myHeap[indexB];
+        myHeap[indexB] = tempNode;
     }
 
     private void heapify(int index) {
-//        if (!isLeaf(index) && myCount != 0) {
-//            if (Heap[index].compareTo(Heap[leftChild(index)]) == -1 ||
-//                    Heap[index].compareTo(Heap[rightChild(index)]) == -1) {
-//                if (Heap[leftChild(index)].compareTo(Heap[rightChild(index)]) == 1) {
-//                    swap(index, leftChild(index));
-//                    heapify(leftChild(index));
-//                } else {
-//                    swap(index, rightChild(index));
-//                    heapify(rightChild(index));
-//                }
-//            }
-//        }
-//        if (!isLeaf(index) && myCount != 0) {
-//            if (myCount >= 3) {
-//                if (Heap[index].compareTo(Heap[leftChild(index)]) == -1 ||
-//                        Heap[index].compareTo(Heap[rightChild(index)]) == -1) {
-//                    if (Heap[leftChild(index)].compareTo(Heap[rightChild(index)]) == 1) {
-//                        swap(index, leftChild(index));
-//                        heapify(leftChild(index));
-//                    } else {
-//                        swap(index, rightChild(index));
-//                        heapify(rightChild(index));
-//                    }
-//                }
-//            } else if (Heap[1].compareTo(Heap[2]) == -1) {
-//                swap(1, 2);
-//            }
-//        }
-        if (!isLeaf(index) && myCount != 0) {
-            if (Heap[index].compareTo(Heap[leftChild(index)]) == -1 ||
-                    Heap[index].compareTo(Heap[rightChild(index)]) == -1) {
-                if (Heap[leftChild(index)].compareTo(Heap[rightChild(index)]) == 1) {
-                    swap(index, leftChild(index));
-                    heapify(leftChild(index));
-                } else {
-                    swap(index, rightChild(index));
-                    heapify(rightChild(index));
+        if (myCount >= 3) {
+            if (!isLeaf(index) && myCount != 0) {
+                if (myHeap[index].compareTo(myHeap[leftChild(index)]) == -1 ||
+                        myHeap[index].compareTo(myHeap[rightChild(index)]) == -1) {
+                    if (myHeap[leftChild(index)].compareTo(myHeap[rightChild(index)]) == 1) {
+                        swap(index, leftChild(index));
+                        heapify(leftChild(index));
+                    } else {
+                        swap(index, rightChild(index));
+                        heapify(rightChild(index));
+                    }
                 }
+            }
+        } else if(myCount == 2){
+            if (myHeap[1].compareTo(myHeap[2]) == -1) {
+                swap(1, 2);
             }
         }
     }
-
 }
