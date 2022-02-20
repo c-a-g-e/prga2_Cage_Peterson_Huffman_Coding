@@ -15,7 +15,7 @@ public class Driver {
         testPriorityQueueConstruction();
 
         HuffmanTree tree = new HuffmanTree(myQueue);
-
+        System.out.println(tree);
         printWriter.close();
     }
 
@@ -39,6 +39,10 @@ public class Driver {
     public static PriorityQueue myQueue;
 
     public static ArrayHeap myHeap;
+
+    public Map<Character,Integer> mapCharFreq;
+
+    public Map<Character,Integer> mapCharBits;
 
     /**
      * Checks the File and Print writer objects. Will throw an exception if the file is not found.
@@ -107,8 +111,7 @@ public class Driver {
 //        for (Map.Entry<Character, Integer> entry : newMap.entrySet()) {
 //            System.out.println("[" + entry.getKey() + "] [" + entry.getValue() + "]");
 //        }
-        myQueue.printQueue();
-        System.out.println(myQueue.toString());
+        //myQueue.printQueue();
     }
 
     private static void testBuildTree() {
@@ -119,9 +122,16 @@ public class Driver {
 //        for ()
 //    }
 
-//    private static String encode(ArrayHeap theHeap) {
+//    private static String encode(HuffmanTree.HuffmanNode root) {
+//        Map<Character,Integer> mapCharBits = new HashMap<>();
 //        StringBuilder s = new StringBuilder();
-//        HuffmanTree.HuffmanNode current = theHeap.getRoot();
+//        HuffmanTree.HuffmanNode current = root;
+//        while (current.myLeft != null && current.myRight != null) {
+//            while (current.myLeft.myLeft != null) {
+//
+//            }
+//        }
+//
 //
 //    }
 

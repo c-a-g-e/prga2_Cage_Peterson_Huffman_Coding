@@ -1,0 +1,15 @@
+======================================
+Char      Frequency      Code         
+--------------------------------------
+          4              Code         
+a         2              Code         
+r         2              Code         
+s         2              Code         
+E         1              Code         
+e         8              Code         
+i         1              Code         
+y         1              Code         
+k         1              Code         
+l         1              Code         
+n         2              Code         
+======================================

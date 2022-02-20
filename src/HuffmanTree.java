@@ -1,7 +1,10 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class HuffmanTree {
 
     public PriorityQueue myQueue;
-    public ArrayHeap myArray;
+    public ArrayHeap myHeap;
     public int arrayCount;
     public HuffmanNode myRoot;
 
@@ -23,7 +26,7 @@ public class HuffmanTree {
         }
 
         public String toString() {
-            return "[Char: " + myChar + " | Freq: " + myFrequency + "]";
+            return "[Char: " + myChar + " | Freq: " + myFrequency + "] ";
         }
 
 
@@ -36,20 +39,40 @@ public class HuffmanTree {
         }
     }
 
-    public HuffmanTree(ArrayHeap theArray) {
-        myArray = theArray;
-        arrayCount = myArray.getMyCount();
-        while (myArray.getMyCount() >= 2) {
+    public HuffmanTree(PriorityQueue theQueue) {
+        myQueue = theQueue;
+        arrayCount = myQueue.getMyCount();
+        while (myQueue.getMyCount() >= 2) {
             int newNodeFreq;
-            HuffmanNode left = theArray.removeMin();
-            HuffmanNode right = theArray.removeMin();
+            HuffmanNode left = theQueue.removeMin();
+            HuffmanNode right = theQueue.removeMin();
             newNodeFreq = left.myFrequency + right.myFrequency;
             HuffmanNode root = new HuffmanNode(' ', newNodeFreq);
             root.setMyLeft(left);
             root.setMyRight(right);
-            myArray.add(root);
+            myQueue.add(root);
         }
-        myRoot = myArray.getRoot();
+        myRoot = myQueue.getRoot();
+    }
+
+    public String toString() {
+        String st = "";
+        Queue<HuffmanNode> queue = new LinkedList<>();
+        queue.add(myRoot);
+        while (!queue.isEmpty()) {
+            HuffmanNode curr = queue.poll();
+            System.out.println("Frequency [" + curr.myFrequency + "] Character [" + curr.myChar + "]");
+
+            if (curr.myLeft != null) {
+                queue.add(curr.myLeft);
+            }
+
+            if (curr.myRight != null) {
+                queue.add(curr.myRight);
+            }
+        }
+
+        return st;
     }
 
 //    public String toString() {

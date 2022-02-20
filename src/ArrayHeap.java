@@ -1,6 +1,6 @@
 public class ArrayHeap {
 
-    protected final HuffmanTree.HuffmanNode[] myHeap;
+    protected HuffmanTree.HuffmanNode[] myHeap;
     protected int mySize;
     protected int myCount;
 
@@ -34,13 +34,17 @@ public class ArrayHeap {
         return (2 * index) + 1;
     }
 
+//    public boolean isLeaf(int index) {
+//        return index <= myCount && index > (myCount / 2);
+//    }
+
     public boolean isLeaf(int index) {
-        return index <= myCount && index > (myCount / 2);
+        return rightChild(index) >= myCount || leftChild(index) >= myCount;
     }
 
     public void add(HuffmanTree.HuffmanNode theNode) {
         myHeap[++myCount] = theNode;
-        heapify(1);
+        heapifyUp(myCount);
     }
 
     public HuffmanTree.HuffmanNode removeMin() {
@@ -48,7 +52,7 @@ public class ArrayHeap {
         myHeap[1] = myHeap[myCount];
         myHeap[myCount] = null;
         myCount--;
-        heapify(1);
+        heapifyDown(1);
         return removed;
     }
 
@@ -59,23 +63,56 @@ public class ArrayHeap {
         myHeap[indexB] = tempNode;
     }
 
-    private void heapify(int index) {
+//    private void heapifyDown(int index) {
+//        if (myCount >= 3) {
+//            if (!isLeaf(index) && myCount != 0) {
+//                if (rightChild(index) <= myCount) {
+//                    if (myHeap[index].compareTo(myHeap[leftChild(index)]) == -1 ||
+//                            myHeap[index].compareTo(myHeap[rightChild(index)]) == -1) {
+//                        if (myHeap[leftChild(index)].compareTo(myHeap[rightChild(index)]) == 1) {
+//                            swap(index, leftChild(index));
+//                            heapifyDown(leftChild(index));
+//                        } else if (rightChild(index) <= myCount) {
+//                            swap(index, rightChild(index));
+//                            heapifyDown(rightChild(index));
+//                        }
+//                    }
+//                }
+//            }
+//        } else if(myCount == 2){
+//            if (myHeap[1].compareTo(myHeap[2]) == -1) {
+//                swap(1, 2);
+//            }
+//        }
+//    }
+
+//    private void buildHeap() {
+//        for (int i = (index ))
+//    }
+
+    private void heapifyDown(int index) {
         if (myCount >= 3) {
-            if (!isLeaf(index) && myCount != 0) {
-                if (myHeap[index].compareTo(myHeap[leftChild(index)]) == -1 ||
-                        myHeap[index].compareTo(myHeap[rightChild(index)]) == -1) {
-                    if (myHeap[leftChild(index)].compareTo(myHeap[rightChild(index)]) == 1) {
-                        swap(index, leftChild(index));
-                        heapify(leftChild(index));
-                    } else {
-                        swap(index, rightChild(index));
-                        heapify(rightChild(index));
-                    }
+            if (!isLeaf(index)) {
+                if (myHeap[index].compareTo(myHeap[leftChild(index)]) == -1) {
+                    swap(index, leftChild(index));
+                    heapifyDown(leftChild(index));
+                } else if ((rightChild(index) <= myCount && myHeap[index].compareTo(myHeap[rightChild(index)]) == -1)) {
+                    swap(index, rightChild(index));
+                    heapifyDown(rightChild(index));
                 }
             }
-        } else if(myCount == 2){
+        } else if (myCount == 2) {
             if (myHeap[1].compareTo(myHeap[2]) == -1) {
                 swap(1, 2);
+            }
+        }
+    }
+
+    private void heapifyUp(int index) {
+        if (index != 1) {
+            if (myHeap[index].compareTo(myHeap[parent(index)]) == 1) {
+                swap(index, parent(index));
+                heapifyUp(parent(index));
             }
         }
     }
